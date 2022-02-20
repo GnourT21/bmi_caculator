@@ -18,25 +18,25 @@ class _InputPageState extends State<InputPage> {
   double height = 170;
   double weight = 40;
   int age = 14;
-  void increasement() {
+  void increment() {
     setState(() {
       weight++;
     });
   }
 
-  void decreasement() {
+  void decrement() {
     setState(() {
       weight--;
     });
   }
 
-  void ageIncreasement() {
+  void ageIncrement() {
     setState(() {
       age++;
     });
   }
 
-  void ageDecreasement() {
+  void ageDecrement() {
     setState(() {
       age--;
     });
@@ -185,7 +185,7 @@ class _InputPageState extends State<InputPage> {
                               width: 46,
                               height: 46,
                               icon: Icons.remove,
-                              onpress: decreasement,
+                              onpress: decrement,
                             ),
                             const SizedBox(
                               width: 14.0,
@@ -195,7 +195,7 @@ class _InputPageState extends State<InputPage> {
                               width: 46,
                               height: 46,
                               icon: Icons.add,
-                              onpress: increasement,
+                              onpress: increment,
                             ),
                           ],
                         ),
@@ -226,7 +226,7 @@ class _InputPageState extends State<InputPage> {
                               width: 46,
                               height: 46,
                               icon: Icons.remove,
-                              onpress: ageDecreasement,
+                              onpress: ageDecrement,
                             ),
                             const SizedBox(
                               width: 14.0,
@@ -236,7 +236,7 @@ class _InputPageState extends State<InputPage> {
                               width: 46,
                               height: 46,
                               icon: Icons.add,
-                              onpress: ageIncreasement,
+                              onpress: ageIncrement,
                             ),
                           ],
                         ),
