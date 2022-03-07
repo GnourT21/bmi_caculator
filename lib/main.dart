@@ -1,4 +1,6 @@
+import 'package:bmi_caculator/provider/bmi_caculator_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'pages/input_page.dart';
 
@@ -9,13 +11,17 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'BMI Caculator',
       theme: ThemeData.dark(),
-      home: const InputPage(),
+      home: ChangeNotifierProvider(
+        create: (_) => BmiCaculatorProvider(),
+        builder: (context, child) {
+          return const InputPage();
+        },
+      ),
     );
   }
 }

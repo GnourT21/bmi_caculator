@@ -1,9 +1,10 @@
-import 'package:bmi_caculator/bmi_caculator.dart';
 import 'package:bmi_caculator/constains.dart';
 import 'package:bmi_caculator/pages/result_page.dart';
+import 'package:bmi_caculator/provider/bmi_caculator_provider.dart';
 import 'package:bmi_caculator/widget/custom_round_btn.dart';
 import 'package:bmi_caculator/widget/input_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class InputPage extends StatefulWidget {
   const InputPage({Key? key}) : super(key: key);
@@ -15,36 +16,13 @@ class InputPage extends StatefulWidget {
 enum Gender { male, female }
 
 class _InputPageState extends State<InputPage> {
-  double height = 170;
-  double weight = 40;
-  int age = 14;
-  void increment() {
-    setState(() {
-      weight++;
-    });
-  }
-
-  void decrement() {
-    setState(() {
-      weight--;
-    });
-  }
-
-  void ageIncrement() {
-    setState(() {
-      age++;
-    });
-  }
-
-  void ageDecrement() {
-    setState(() {
-      age--;
-    });
-  }
-
   Gender? selectedGender;
   @override
   Widget build(BuildContext context) {
+    var bmi = context.read<BmiCaculatorProvider>();
+    var height = context.watch<BmiCaculatorProvider>().height;
+    var weight = context.watch<BmiCaculatorProvider>().weight;
+    var age = context.watch<BmiCaculatorProvider>().age;
     return Scaffold(
       appBar: AppBar(
         title: const Text('BMI Caculator'),
@@ -135,14 +113,12 @@ class _InputPageState extends State<InputPage> {
                     ),
                   ),
                   Slider(
-                    value: height.toDouble(),
+                    value: height,
                     min: 120,
                     max: 220,
-                    activeColor: Colors.blueAccent,
+                    activeColor: const Color.fromARGB(255, 240, 74, 74),
                     onChanged: (double value) {
-                      setState(() {
-                        height = value;
-                      });
+                      bmi.height = value;
                     },
                   ),
                 ],
@@ -185,7 +161,7 @@ class _InputPageState extends State<InputPage> {
                               width: 46,
                               height: 46,
                               icon: Icons.remove,
-                              onpress: decrement,
+                              onpress: () => bmi.decrement(),
                             ),
                             const SizedBox(
                               width: 14.0,
@@ -195,7 +171,7 @@ class _InputPageState extends State<InputPage> {
                               width: 46,
                               height: 46,
                               icon: Icons.add,
-                              onpress: increment,
+                              onpress: () => bmi.increment(),
                             ),
                           ],
                         ),
@@ -226,7 +202,7 @@ class _InputPageState extends State<InputPage> {
                               width: 46,
                               height: 46,
                               icon: Icons.remove,
-                              onpress: ageDecrement,
+                              onpress: () => bmi.ageDecrement(),
                             ),
                             const SizedBox(
                               width: 14.0,
@@ -236,7 +212,7 @@ class _InputPageState extends State<InputPage> {
                               width: 46,
                               height: 46,
                               icon: Icons.add,
-                              onpress: ageIncrement,
+                              onpress: () => bmi.ageIncrement(),
                             ),
                           ],
                         ),
@@ -249,7 +225,6 @@ class _InputPageState extends State<InputPage> {
           ),
           RawMaterialButton(
             onPressed: () {
-              BmiCaculator bmi = BmiCaculator(height: height, weight: weight);
               bmi.caculatorBMI();
               Navigator.of(context).push(
                 MaterialPageRoute(
